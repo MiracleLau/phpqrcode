@@ -1,0 +1,139 @@
+<html>
+<head>
+	<title>二维码在线制作-Powered By Miracle-紫狼</title>
+	<meta http-equiv="Content-Type" Content="text/html;charset=utf-8" />
+	<meta name="viewport" content="width=device-width,initial-scale=1.0,minimum-scale=1.0,maximum-scale=1.0" />
+	<style type="text/css">
+		table{
+			margin:0 auto;
+
+		}
+	</style>
+	<script type="text/javascript">
+	var butt = document.getElementById("button");
+	function send()
+	{
+		var content = document.getElementById("content").value;
+		var level = document.getElementById("level").value;
+		var size = document.getElementById("size").value;
+		var ba = document.getElementById("display-qrcode");
+		content = content.match("http://") ? content : content = "http://"+content;
+		var xmlHttp = GetXmlHttpObject();
+		var url="deal.php";
+		var post="content="+content+"&level="+level+"&size="+size;
+		xmlHttp.open("POST",url,true);
+		xmlHttp.setRequestHeader("Content-type","application/x-www-form-urlencoded");
+		xmlHttp.send(post);
+		xmlHttp.onreadystatechange=function()
+  		{
+ 		 	if(xmlHttp.readyState==4)
+    		{
+	    		ba.innerHTML="<center><img src="+xmlHttp.responseText+" style='margin:0 auto'></center>";
+   			}else{
+   				ba.innerHTML="请求失败！";
+   			}
+  		}
+
+
+
+	}
+	function GetXmlHttpObject()
+	{
+	  var xmlHttp=null;
+	  try
+	    {
+	    // Firefox, Opera 8.0+, Safari
+	    xmlHttp=new XMLHttpRequest();
+	    }
+	  catch (e)
+	    {
+	    // Internet Explorer
+	    try
+	      {
+	      xmlHttp=new ActiveXObject("Msxml2.XMLHTTP");
+	      }
+	    catch (e)
+	      {
+	      xmlHttp=new ActiveXObject("Microsoft.XMLHTTP");
+	      }
+	    }
+	return xmlHttp;
+	}
+	function change(){
+		var a = document.getElementById("m");
+		var se = document.getElementById("c").value;
+		switch(se){
+			case "文字":
+				a.innerHTML="请输入要生成的文字:";
+				break;
+			case "链接":
+				a.innerHTML="请输入链接地址:";
+				break;
+			case "邮件":
+				a.innerHTML="请输入邮件地址:";
+				break;
+		}
+	}
+</script>
+</head>
+<body onload="change()">
+	<center><h2>在线二维码制作</h2></center>
+	<div id="display-qrcode" style="margin:0 auto"></div>
+	<table>
+		<tr>
+			<td>请选择二维码功能</td>
+		</tr>
+		<tr>
+			<td>
+				<select name="c" id="c" onchange="change()">
+					<option value="文字">文字</option>
+					<option value="链接">链接</option>
+					<option value="邮件">邮件</option>
+				</select>
+			</td>
+		</tr>		
+		<tr>
+			<td id="m"></td>
+		</tr>
+		<tr>
+			<td><input type="text" name="content" id="content" placeholder=""></td>
+		</tr>
+		<tr>
+			<td>请选择纠错等级:</td>
+		</tr>
+		<tr>
+			<td><select name="level" id="level">
+				<option value="L">L</option>
+				<option value="M" selected>M</option>
+				<option value="Q">Q</option>
+				<option value="H">H</option>
+			</select>(不懂就不要选择)</td>
+		</tr>
+		<tr>
+			<td>请选择二维码大小:</td>
+		</tr>
+		<tr>
+			<td>
+				<select name="size" id="size">
+					<option value="1">1</option>
+					<option value="2">2</option>
+					<option value="3">3</option>
+					<option value="4">4</option>
+					<option value="5" selected>5</option>
+					<option value="6">6</option>
+					<option value="7">7</option>
+					<option value="8">8</option>
+					<option value="9">9</option>
+					<option value="10">10</option>		
+				</select>
+			</td>
+		</tr>
+		<tr>
+			<td><button name="button" id="button" onclick="send()">点击生成二维码</button></td>
+		</tr>
+		<tr style="text-align:center">
+			<td>Powered By Miracle-紫狼</td>
+		</tr>
+	</table>
+</body>
+</html>
